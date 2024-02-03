@@ -1,0 +1,46 @@
+{
+  "todo": {
+    "2023-12-20": [
+      {
+        "val": "test",
+        "done": true
+      }
+    ],
+    "2024-01-01": [
+      {
+        "val": "TO DO LIST + CALENDAR CSS 완료하기",
+        "done": false
+      },
+      {
+        "val": "JS layout 구성하기",
+        "done": false
+      }
+    ],
+    "2024-01-20": [
+      {
+        "val": "플스 게임하기",
+        "done": false
+      },
+      {
+        "val": "운동하기",
+        "done": false
+      }
+    ],
+    "2024-01-29": [
+      {
+        "val": "산책하기",
+        "done": true
+      }
+    ],
+    "2024-01-30": [
+      {
+        "val": "이력서 쓰기",
+        "done": false
+      },
+      {
+        "val": "회사 탐색하기",
+        "done": true
+      }
+    ]
+  }
+}
