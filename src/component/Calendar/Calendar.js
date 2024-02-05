@@ -7,15 +7,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../Calendar/Calendar.css';
 import { CalendarBody } from './CalendarBody';
 import { getStringDate } from '../../util/date';
+// import TodoList from '../TodoList/TodoList';
 
 const currentDate = new Date();
 const currentYearSplit = getStringDate(currentDate).split('-')[0];
 const currentMonthSplit = getStringDate(currentDate).split('-')[1];
 const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
-function Calendar() {
+function Calendar({ onSelectDate }) {
   const [currentYear, setCurrentYear] = useState(currentYearSplit);
   const [currentMonth, setCurrentMonth] = useState(currentMonthSplit);
+  // const [selectedDate, setSelectedDate] = useState(null);
 
   const updateCalendar = (newYear, newMonth) => {
     setCurrentYear(newYear);
@@ -36,6 +38,24 @@ function Calendar() {
       getStringDate(nextDate).split('-')[0],
       getStringDate(nextDate).split('-')[1],
     );
+  };
+
+  const handleDayClick = day => {
+    // day 객체에서 날짜 정보 추출
+    if (day) {
+      const { day: selectedDay } = day;
+      // 날짜가 유효하고 빈 셀인 경우에만 처리
+      if (selectedDay !== null) {
+        // 선택한 날짜에 해당하는 전체 날짜 정보 구성
+        const selectedDate = new Date(
+          currentYear,
+          currentMonth - 1,
+          selectedDay,
+        );
+        // 전체 날짜 정보 전달
+        onSelectDate(selectedDate);
+      }
+    }
   };
 
   const calendarData = CalendarBody(currentYear, currentMonth);
@@ -68,7 +88,7 @@ function Calendar() {
           {calendarData.map((week, index) => (
             <tr key={index}>
               {week.map((day, dayIndex) => (
-                <td key={dayIndex}>
+                <td key={dayIndex} onClick={() => handleDayClick(day)}>
                   {day ? (
                     <div
                       className={`day-cell ${day.isToday ? 'today' : ''} ${day.isFuture ? 'future-date' : ''}`}
@@ -84,6 +104,7 @@ function Calendar() {
           ))}
         </tbody>
       </table>
+      {/* {selectedDate && <TodoList selectedDate={selectedDate} />} */}
     </div>
   );
 }

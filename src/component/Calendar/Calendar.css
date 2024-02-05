@@ -47,6 +47,7 @@ tbody td {
 }
 
 .day-cell {
+  margin: 2px;
   cursor: pointer;
   height: 3.7rem;
   display: flex;

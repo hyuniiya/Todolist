@@ -12,7 +12,6 @@ export const CalendarBody = (year, month) => {
 
   // 해당 월의 첫 날 요일
   let DayOfWeek = firstDay.getDay();
-  console.log(DayOfWeek);
 
   // 윤년 여부 확인
   const isLeapYear = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
@@ -60,7 +59,6 @@ export const CalendarBody = (year, month) => {
         week.push(null);
       }
     }
-
     // 해당 주의 정보를 달력 데이터 배열 추가
     calendarData.push(week);
     // 다음 주의 시작 요일 초기화
