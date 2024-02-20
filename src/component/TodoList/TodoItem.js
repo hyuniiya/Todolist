@@ -1,16 +1,29 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
+import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-function TodoItem({ text, done, onDelete }) {
+function TodoItem({ text, done, onToggle, onDelete }) {
   return (
-    <div className={`todo-item ${done ? 'done' : ''}`}>
-      <FontAwesomeIcon icon={faCheckCircle} fontSize={20} />
-      <span>{text}</span>
-      <button className="delete-btn" onClick={onDelete}>
-        <FontAwesomeIcon icon={faTimes} />
-      </button>
-    </div>
+    <>
+      <label className={`todo-item ${done ? 'done' : ''}`}>
+        <input
+          className="checkbox"
+          type="checkbox"
+          checked={done}
+          onChange={onToggle}
+        />
+        <FontAwesomeIcon icon={done ? faCheckCircle : faCircle} fontSize={20} />
+        <span>{text}</span>
+        <div className="item-right">
+          <button
+            className={`delete-btn ${done ? 'done' : ''}`}
+            onClick={onDelete}
+          >
+            <FontAwesomeIcon icon={faTimes} />
+          </button>
+        </div>
+      </label>
+    </>
   );
 }
 

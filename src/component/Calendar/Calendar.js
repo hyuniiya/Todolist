@@ -91,7 +91,7 @@ function Calendar({ onSelectDate }) {
                 <td key={dayIndex} onClick={() => handleDayClick(day)}>
                   {day ? (
                     <div
-                      className={`day-cell ${day.isToday ? 'today' : ''} ${day.isFuture ? 'future-date' : ''}`}
+                      className={`day-cell ${day.isToday ? 'today' : ''} ${day.isFuture ? 'future-date' : ''} ${day.isSelected ? 'selected-date' : ''}`}
                     >
                       <div className="day-number">{day.day}</div>
                     </div>

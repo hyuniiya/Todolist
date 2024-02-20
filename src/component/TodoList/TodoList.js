@@ -32,6 +32,12 @@ function TodoList({ selectedDate, todos = [], updateTodos }) {
     updateTodos(updatedTodos);
   };
 
+  const handleToggleTodo = i => {
+    const updatedTodos = [...todos];
+    updatedTodos[i].done = !updatedTodos[i].done;
+    updateTodos(updatedTodos);
+  };
+
   // 선택된 날짜가 유효한 Date 객체인지 확인
   const dateObject = selectedDate instanceof Date ? selectedDate : new Date();
 
@@ -68,14 +74,17 @@ function TodoList({ selectedDate, todos = [], updateTodos }) {
           <FontAwesomeIcon icon={faCirclePlus} fontSize={25} />
         </button>
       )}
-      {todos.map((todo, i) => (
-        <TodoItem
-          key={i}
-          text={todo.val}
-          done={todo.done}
-          onDelete={() => handleDeleteTodo(i)}
-        />
-      ))}
+      <div className="todo-list-container">
+        {todos.map((todo, i) => (
+          <TodoItem
+            key={i}
+            text={todo.val}
+            done={todo.done}
+            onToggle={() => handleToggleTodo(i)}
+            onDelete={() => handleDeleteTodo(i)}
+          />
+        ))}
+      </div>
     </div>
   );
 }

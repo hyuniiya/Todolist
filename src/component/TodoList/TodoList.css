@@ -34,7 +34,7 @@
 }
 
 input[type="text"] {
-  width: 150px;
+  width: 330px;
   padding: 1.2em;
   border: none;
 }
@@ -63,7 +63,7 @@ input[type="text"]:focus {
 } */
 
 .main-title {
-  margin-top: 80px;
+  margin: 30px 0px 30px 0px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -89,16 +89,25 @@ input[type="text"]:focus {
 }
 
 /* TodoItem */
+.todo-list-container {
+  overflow-y: auto;
+  max-height: 430px;
+}
+
 .todo-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 8px;
   border-bottom: 1px solid #ccc;
+  cursor: pointer;
 }
 
 .todo-item.done {
-  text-decoration: line-through;
+  color: #ccc;
+}
+
+.item-right {
+  margin-left: auto;
 }
 
 .delete-btn {
@@ -109,6 +118,18 @@ input[type="text"]:focus {
   transition: color 0.3s ease;
 }
 
+.delete-btn.done {
+  color: #ccc;
+}
+
+.delete-btn.done:hover {
+  color: #a2a1a1;
+}
+
+.delete-btn.done:active {
+  color: #b8b6b6;
+}
+
 .delete-btn:hover {
   color: #f4993093;
 }
@@ -116,4 +137,15 @@ input[type="text"]:focus {
 .delete-btn:active {
   color: #F49A30;
   background: none;
+}
+
+.checkbox {
+ display: none;
+}
+
+span {
+  padding-left: 10px;
+  display: inline-block;
+  line-height: 1.5;
+  text-align: left;
 }
