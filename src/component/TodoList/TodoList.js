@@ -1,40 +1,65 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../TodoList/TodoList.css';
 import TodoItem from './TodoItem';
 
 function TodoList({ selectedDate, todos = [], updateTodos }) {
-  console.log(todos);
   const [showInput, setShowInput] = useState(false);
   const [newTodoText, setNewTodoText] = useState('');
+  const [filteredTodos, setFilteredTodos] = useState([]);
+
+  useEffect(() => {
+    if (!selectedDate) {
+      setFilteredTodos([]);
+      return;
+    }
+
+    const selectedDateString = selectedDate.toISOString().split('T')[0];
+    const todosForSelectedDate = todos[selectedDateString] || [];
+    setFilteredTodos(todosForSelectedDate);
+  }, [selectedDate, todos]);
 
   const toggleInput = () => {
     setShowInput(!showInput);
   };
 
-  const handleAddTodo = () => {
-    if (newTodoText.trim() === '') return;
+  const handleAddTodo = e => {
+    if (e.key === 'Enter' || e.type === 'click') {
+      if (newTodoText.trim() === '') return;
 
-    const newTodo = {
-      val: newTodoText,
-      done: false,
-    };
+      const newTodo = {
+        val: newTodoText,
+        done: false,
+      };
 
-    updateTodos([...todos, newTodo]);
-    setNewTodoText('');
-    toggleInput();
+      const dateString = selectedDate.toISOString().split('T')[0];
+      const updatedTodos = {
+        ...todos,
+        [dateString]: [...(todos[dateString] || []), newTodo],
+      };
+
+      updateTodos(updatedTodos);
+      setNewTodoText('');
+      toggleInput();
+    }
   };
 
   const handleDeleteTodo = i => {
-    const updatedTodos = [...todos];
-    updatedTodos.splice(i, 1);
+    const dateString = selectedDate.toISOString().split('T')[0];
+    const updatedTodos = { ...todos };
+    updatedTodos[dateString] = updatedTodos[dateString].filter(
+      (_, index) => index !== i,
+    );
+
     updateTodos(updatedTodos);
   };
 
   const handleToggleTodo = i => {
-    const updatedTodos = [...todos];
-    updatedTodos[i].done = !updatedTodos[i].done;
+    const dateString = selectedDate.toISOString().split('T')[0]; // 선택된 날짜를 YYYY-MM-DD 형식으로 변환
+    const updatedTodos = { ...todos };
+    updatedTodos[dateString][i].done = !updatedTodos[dateString][i].done;
+
     updateTodos(updatedTodos);
   };
 
@@ -64,6 +89,7 @@ function TodoList({ selectedDate, todos = [], updateTodos }) {
             placeholder="할 일을 입력하세요."
             value={newTodoText}
             onChange={e => setNewTodoText(e.target.value)}
+            onKeyDown={handleAddTodo}
           />
           <button className="add-btn" onClick={handleAddTodo}>
             추가
@@ -75,7 +101,7 @@ function TodoList({ selectedDate, todos = [], updateTodos }) {
         </button>
       )}
       <div className="todo-list-container">
-        {todos.map((todo, i) => (
+        {filteredTodos.map((todo, i) => (
           <TodoItem
             key={i}
             text={todo.val}

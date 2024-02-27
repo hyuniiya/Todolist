@@ -55,19 +55,19 @@ tbody td {
   justify-content: center;
 }
 
-.day-cell:hover {
+.day-cell:hover,
+.day-cell:active {
   background-color: rgba(255, 255, 255, .3);
   border-radius: 50%;
 }
 
-.day-cell:active{
-  background-color: rgba(255, 255, 255, .3);
+.day-cell.selected {
+  background-color: rgb(68, 163, 66);
   border-radius: 50%;
 }
 
-.day-cell.selected-date {
-  background-color: rgba(255, 255, 255, .3);
-  border-radius: 50%;
+.day-cell.dot {
+  background-color: #ffffff;
 }
 
 .today {
@@ -99,5 +99,5 @@ button:hover {
 }
 
 button:active {
-  background-color: #aaa;
+  background-color: #aaa; 
 }

@@ -5,7 +5,7 @@ import '../style/Main.css';
 
 function Main() {
   const [selectedDate, setSelectedDate] = useState(null);
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState({});
 
   const handleDateSelect = day => {
     setSelectedDate(day);
@@ -22,7 +22,7 @@ function Main() {
         todos={todos}
         updateTodos={handleUpdateTodos}
       />
-      <Calendar onSelectDate={handleDateSelect} />
+      <Calendar onSelectDate={handleDateSelect} todos={todos} />
     </div>
   );
 }

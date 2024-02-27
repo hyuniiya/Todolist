@@ -17,7 +17,7 @@ const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 function Calendar({ onSelectDate }) {
   const [currentYear, setCurrentYear] = useState(currentYearSplit);
   const [currentMonth, setCurrentMonth] = useState(currentMonthSplit);
-  // const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const updateCalendar = (newYear, newMonth) => {
     setCurrentYear(newYear);
@@ -40,20 +40,31 @@ function Calendar({ onSelectDate }) {
     );
   };
 
+  // const hasTodos = (year, month, day) => {
+  //   const dateString = getStringDate(new Date(year, month - 1, day)).split(
+  //     'T',
+  //   )[0];
+  //   console.log('dateString:', dateString);
+  //   console.log('todos[dateString]:', todos[dateString]);
+  //   const result = todos[dateString] && todos[dateString].length > 0;
+  //   console.log(`hasTodos(${year}, ${month}, ${day}): ${result}`);
+  //   return result;
+  // };
+
   const handleDayClick = day => {
+    console.log('Clicked day:', day);
     // day 객체에서 날짜 정보 추출
     if (day) {
-      const { day: selectedDay } = day;
+      // const { day: selectedDay } = day;
+      const selectedDay = day.day;
       // 날짜가 유효하고 빈 셀인 경우에만 처리
       if (selectedDay !== null) {
         // 선택한 날짜에 해당하는 전체 날짜 정보 구성
-        const selectedDate = new Date(
-          currentYear,
-          currentMonth - 1,
-          selectedDay,
-        );
+        const clickedDate = new Date(currentYear, currentMonth - 1, day.day);
         // 전체 날짜 정보 전달
-        onSelectDate(selectedDate);
+        setSelectedDate(clickedDate);
+        onSelectDate(clickedDate);
+        console.log('Selected Date C:', clickedDate);
       }
     }
   };
@@ -88,12 +99,19 @@ function Calendar({ onSelectDate }) {
           {calendarData.map((week, index) => (
             <tr key={index}>
               {week.map((day, dayIndex) => (
-                <td key={dayIndex} onClick={() => handleDayClick(day)}>
+                <td
+                  key={dayIndex}
+                  onClick={() => handleDayClick(day)}
+                  className={day && day.isToday ? 'selected' : ''}
+                >
                   {day ? (
                     <div
-                      className={`day-cell ${day.isToday ? 'today' : ''} ${day.isFuture ? 'future-date' : ''} ${day.isSelected ? 'selected-date' : ''}`}
+                      className={`day-cell ${day.isToday ? 'today' : ''} ${selectedDate && selectedDate.getMonth() === currentMonth - 1 && selectedDate.getDate() === day.day ? 'selected' : ''}`}
                     >
                       <div className="day-number">{day.day}</div>
+                      {/* {hasTodos(currentYear, currentMonth, day.day) && (
+                        <div className="dot" />
+                      )} */}
                     </div>
                   ) : (
                     ''
